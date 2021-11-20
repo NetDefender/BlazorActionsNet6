@@ -1,17 +1,96 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<Layout Style="min-height: 100vh;">
+    <Sider Collapsible Collapsed=@_collapsed OnCollapse=@OnCollapse>
+        <div class="logo" />
+        <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
+            @{
+                RenderFragment fragWorkHistory =
+                    @<span>
+                        <Icon Type="history" Theme="outline"/>
+                        <span>Work History</span>
+                    </span>;
+            }
+            <SubMenu Key="keyJobHistory" TitleTemplate=fragWorkHistory>
+                <MenuItem Key="keyJobHistoryOesia">
+                    <Icon Type="laptop" Theme="outline"/>
+                    <span>OESIA</span>
+                </MenuItem>
+                <MenuItem Key="keyJobHistoryIasoft">
+                    <Icon Type="desktop" Theme="outline"/>
+                    <span>iaSoft</span>
+                </MenuItem>
+                <MenuItem Key="keyJobHistoryJohnson">
+                    <Icon Type="car" Theme="outline"/>
+                    <span>Johnson</span>
+                </MenuItem>
+            </SubMenu>
+            @{
+                RenderFragment fragProficiencies =
+                    @<span>
+                        <Icon Type="sketch" Theme="outline"/>
+                        <span>Proficiencies</span>
+                    </span>;
+            }
+            <SubMenu Key="keyProficiencies" TitleTemplate=fragProficiencies>
+                 <MenuItem Key="keyProficienciesProgrammingLanguages">
+                    <Icon Type="code" Theme="outline"/>
+                    <span>Languages</span>
+                </MenuItem>
+                <MenuItem Key="keyProficienciesDatabases">
+                    <Icon Type="database" Theme="outline"/>
+                    <span>Databases</span>
+                </MenuItem>
+                <MenuItem Key="keyProficienciesCompetenciasGit">
+                    <Icon Type="github" Theme="outline"/>
+                    <span>Git</span>
+                </MenuItem>
+                 <MenuItem Key="keyProficienciesFrameworksLibraries">
+                    <Icon Type="tool" Theme="outline"/>
+                    <span>Frameworks</span>
+                </MenuItem>
+                <MenuItem Key="keyProficienciesScrum">
+                    <Icon Type="retweet" Theme="outline"/>
+                    <span>Scrum</span>
+                </MenuItem>
+                <MenuItem Key="keyProficienciesServers">
+                    <Icon Type="windows" Theme="outline"/>
+                    <span>Servers</span>
+                </MenuItem>
+            </SubMenu>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+            @{
+                RenderFragment fragStudies =
+                    @<span>
+                        <Icon Type="book" Theme="outline"/>
+                        <span>Studies</span>
+                    </span>;
+            }
+            <SubMenu Key="keyStudies" TitleTemplate=fragStudies>
+                <MenuItem Key="keyStudyCertifications">Certifications</MenuItem>
+                <MenuItem Key="keyStudyUniversity">University</MenuItem>
+                <MenuItem Key="keyStudySecondary">Secondary</MenuItem>
+            </SubMenu>
+            @{
+                RenderFragment fragLanguages =
+                    @<span>
+                        <Icon Type="flag" Theme="outline"/>
+                        <span>Languages</span>
+                    </span>;
+            }
+            <SubMenu Key="keyLanguages" TitleTemplate=fragLanguages>
+                <MenuItem Key="keyStudySecondary">Spanish</MenuItem>
+                <MenuItem Key="keyStudyUniversity">English</MenuItem>
+            </SubMenu>
+            <MenuItem Key="keyContact">
+                <Icon Type="sync" Theme="outline" Spin />
+                <span>Contact</span>
+            </MenuItem>
+        </Menu>
+    </Sider>
+    <Layout Class="site-layout" >
+        <Content>
             @Body
-        </article>
-    </main>
-</div>
+        </Content>
+    </Layout>
+</Layout>
