@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<Layout Style="min-height: 100vh;">
+<Layout Style="min-height: 100vh;background-color:lightgray">
     <Sider Collapsible Collapsed=@_collapsed OnCollapse=@OnCollapse>
         <div class="logo" />
         <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
@@ -12,15 +12,19 @@
                     </span>;
             }
             <SubMenu Key="keyJobHistory" TitleTemplate=fragWorkHistory>
-                <MenuItem Key="keyJobHistoryOesia">
+                <MenuItem Key="keyJobHistoryOesia" RouterLink="/JobHistoryOesia">
                     <Icon Type="laptop" Theme="outline"/>
                     <span>OESIA</span>
                 </MenuItem>
-                <MenuItem Key="keyJobHistoryIasoft">
+                <MenuItem Key="keyJobHistoryAuloce" RouterLink="/JobHistoryAuloce">
+                    <Icon Type="desktop" Theme="outline"/>
+                    <span>Auloce</span>
+                </MenuItem>
+                <MenuItem Key="keyJobHistoryIasoft" RouterLink="/JobHistoryIasoft">
                     <Icon Type="desktop" Theme="outline"/>
                     <span>iaSoft</span>
                 </MenuItem>
-                <MenuItem Key="keyJobHistoryJohnson">
+                <MenuItem Key="keyJobHistoryJohnson" RouterLink="/JobHistoryJohnson">
                     <Icon Type="car" Theme="outline"/>
                     <span>Johnson</span>
                 </MenuItem>
@@ -33,27 +37,27 @@
                     </span>;
             }
             <SubMenu Key="keyProficiencies" TitleTemplate=fragProficiencies>
-                 <MenuItem Key="keyProficienciesProgrammingLanguages">
+                <MenuItem Key="keyProficienciesProgrammingLanguages" RouterLink="ProgrammingLanguages">
                     <Icon Type="code" Theme="outline"/>
                     <span>Languages</span>
                 </MenuItem>
-                <MenuItem Key="keyProficienciesDatabases">
+                <MenuItem Key="keyProficienciesDatabases" RouterLink="Databases">
                     <Icon Type="database" Theme="outline"/>
                     <span>Databases</span>
                 </MenuItem>
-                <MenuItem Key="keyProficienciesCompetenciasGit">
+                <MenuItem Key="keyProficienciesCompetenciasGit" RouterLink="Git">
                     <Icon Type="github" Theme="outline"/>
                     <span>Git</span>
                 </MenuItem>
-                 <MenuItem Key="keyProficienciesFrameworksLibraries">
+                 <MenuItem Key="keyProficienciesFrameworksLibraries" RouterLink="Frameworks">
                     <Icon Type="tool" Theme="outline"/>
                     <span>Frameworks</span>
                 </MenuItem>
-                <MenuItem Key="keyProficienciesScrum">
+                <MenuItem Key="keyProficienciesScrum" RouterLink="Scrum">
                     <Icon Type="retweet" Theme="outline"/>
                     <span>Scrum</span>
                 </MenuItem>
-                <MenuItem Key="keyProficienciesServers">
+                <MenuItem Key="keyProficienciesServers" RouterLink="Servers">
                     <Icon Type="windows" Theme="outline"/>
                     <span>Servers</span>
                 </MenuItem>
@@ -67,9 +71,15 @@
                     </span>;
             }
             <SubMenu Key="keyStudies" TitleTemplate=fragStudies>
-                <MenuItem Key="keyStudyCertifications">Certifications</MenuItem>
-                <MenuItem Key="keyStudyUniversity">University</MenuItem>
-                <MenuItem Key="keyStudySecondary">Secondary</MenuItem>
+                <MenuItem Key="keyStudyCertifications" RouterLink="Certifications">
+                    <Icon Type="container" Theme="outline"/>
+                    <span>Certifications</span></MenuItem>
+                <MenuItem Key="keyStudyUniversity" RouterLink="University">
+                    <Icon Type="bank" Theme="outline"/>
+                    <span>University</span></MenuItem>
+                <MenuItem Key="keyStudySecondary" RouterLink="Secondary">
+                    <Icon Type="file-done" Theme="outline"/>
+                    <span>Secondary</span></MenuItem>
             </SubMenu>
             @{
                 RenderFragment fragLanguages =
@@ -79,17 +89,23 @@
                     </span>;
             }
             <SubMenu Key="keyLanguages" TitleTemplate=fragLanguages>
-                <MenuItem Key="keyStudySecondary">Spanish</MenuItem>
-                <MenuItem Key="keyStudyUniversity">English</MenuItem>
+                <MenuItem Key="keyStudySpanish" RouterLink="Spanish">
+                    <Icon Type="taobao" Theme="outline"/>
+                    <span>Spanish</span>
+                </MenuItem>
+                <MenuItem Key="keyStudyEnglish" RouterLink="English">
+                    <Icon Type="alipay" Theme="outline"/>
+                    <span>English</span>
+                </MenuItem>
             </SubMenu>
-            <MenuItem Key="keyContact">
-                <Icon Type="sync" Theme="outline" Spin />
+            <MenuItem Key="keyContact" RouterLink="Contact">
+                <Icon Type="idcard" Theme="outline" Spin/>
                 <span>Contact</span>
             </MenuItem>
         </Menu>
     </Sider>
-    <Layout Class="site-layout" >
-        <Content>
+    <Layout Class="site-layout" style="margin:50px;background-color:lightgray">
+        <Content >
             @Body
         </Content>
     </Layout>
