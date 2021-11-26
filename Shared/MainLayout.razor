@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<Layout Style="min-height: 100vh;background-color:lightgray">
+<Layout Style="min-height: 100vh;background-color:white">
     <Sider Collapsible Collapsed=@_collapsed OnCollapse=@OnCollapse>
         <div class="logo" />
         <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
@@ -45,9 +45,9 @@
                     <Icon Type="database" Theme="outline"/>
                     <span>Databases</span>
                 </MenuItem>
-                <MenuItem Key="keyProficienciesCompetenciasGit" RouterLink="Git">
+                <MenuItem Key="keyProficienciesCompetenciasSourceControl" RouterLink="SourceControl">
                     <Icon Type="github" Theme="outline"/>
-                    <span>Git</span>
+                    <span>GIT CI/CD</span>
                 </MenuItem>
                  <MenuItem Key="keyProficienciesFrameworksLibraries" RouterLink="Frameworks">
                     <Icon Type="tool" Theme="outline"/>
@@ -104,7 +104,7 @@
             </MenuItem>
         </Menu>
     </Sider>
-    <Layout Class="site-layout" style="margin:50px;background-color:lightgray">
+    <Layout Class="site-layout" style="margin:50px;background-color:white">
         <Content >
             @Body
         </Content>

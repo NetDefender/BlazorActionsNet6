@@ -1,17 +1,19 @@
 ﻿@page "/Databases"
-@inject IJSRuntime JSRuntime 
+@inject IJSRuntime JSRuntime
+@inject MessageService _message
 
 <Divider Orientation="left"><h3>Sql Server</h3></Divider>
 <Row>
     <Col Span="24">
-        <Carousel Autoplay="TimeSpan.FromSeconds(0)">
+        <Carousel Autoplay="TimeSpan.FromSeconds(30)" @ref="_carousel">
             <CarouselSlick>
                 <h5>T-SQL</h5>
                 <Row>
                     <Col Span="18">
                         <Comment Author="Scripting, Stored Procedures and CLR integration"
                                     Avatar="images/sql-server.png"
-                                    Content="High Proficiency in Data Manipulation Language (DML) Data Definition Language (DDL) Data Control Language (DCL) and Transaction Control Language (TCL). All with the latest version."
+                                    Content="High Proficiency in Data Manipulation Language (DML) Data Definition Language (DDL) Data Control Language (DCL) and Transaction Control Language (TCL)
+. All with the latest version knowledge. Stored Procedures, functions, views, triggers, CLR data types (FileStream, HierarchyId, etc), custom types and JSON data types."
                                     Datetime="">
                             <Row>
                                 <Col Span="12">
@@ -47,16 +49,23 @@
                     <Col Span="18">
                         <Comment Author="Research and Troubleshooting"
                                     Avatar="images/performance.png"
-                                    Content="High Proficiency in Analysis and resolution of performance problems in database servers. Query tunning and index strategies."
+                                    Content="High Proficiency in Analysis and resolution of performance problems in database servers. Query tunning and index strategies. 
+AWS CloudWatch, PerfMon, Sql Server Profiler and Execution Plan evaluation."
                                     Datetime="">
-                            <Row>
-                                <Col Span="12">
-                                    <Image Src="images/performance-monitor.png"/>
-                                </Col>
-                                <Col Span="12">
-                                    <Image Src="images/performance-monitor-2.png"/>
-                                </Col>
-                            </Row>
+                            <Card>
+                                <CardGrid Style="width:50%;text-align:center" Hoverable="true">
+                                    <Image Src="images/performance-monitor.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
+                                </CardGrid>
+                                <CardGrid Style="width:50%;text-align:center" Hoverable="false">
+                                    <Image Src="images/performance-monitor-3.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
+                                </CardGrid>
+                                <CardGrid Style="width:50%;text-align:center" Hoverable="true">
+                                    <Image Src="images/performance-monitor-2.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
+                                </CardGrid>
+                                <CardGrid Style="width:50%;text-align:center" Hoverable="true">
+                                    <Image Src="images/performance-monitor-4.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
+                                </CardGrid>
+                            </Card>
                         </Comment>
                     </Col>
                     <Col Span="6">
@@ -68,16 +77,8 @@
                     </Col>
                 </Row>
             </CarouselSlick>
-        </Carousel>
-    </Col>
-</Row>
 
-<Divider></Divider>
-
-<Row>
-    <Col Span="24">
-        <Carousel Autoplay="TimeSpan.FromSeconds(0)">
-             <CarouselSlick>
+            <CarouselSlick>
                 <h5>Server Maintenance</h5>
                 <Row>
                     <Col Span="18">
@@ -139,8 +140,28 @@
         </Carousel>
     </Col>
 </Row>
+<Row>
+    <Col Span="24">
+        <div class="button-container">
+            <Button Type="primary" OnClick="@( _=>{_carousel.Previous();_message.Success("Previous information slide", 10);})" Size="Large" Shape="@ButtonShape.Round">Previous</Button>
+            <Button Type="primary" OnClick="@( _=>{_carousel.Next();_message.Success("Next information slide", 10);})" Size="Large" Shape="@ButtonShape.Round">Next</Button>
+        </div>
+    </Col>
+</Row>
+
+<style>
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        padding-top:4px;
+    }
+</style>
 
 @code{
+
+    private Carousel _carousel;
+
+
     const string SnippetTsql1 = @"CREATE PROCEDURE [Security].[NotificationUserPendingExiste]
   @IdUser INT
 AS
