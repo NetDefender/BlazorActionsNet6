@@ -1,9 +1,10 @@
 ﻿@page "/Databases"
+@inject IJSRuntime JSRuntime 
 
 <Divider Orientation="left"><h3>Sql Server</h3></Divider>
 <Row>
     <Col Span="24">
-        <Carousel Autoplay="TimeSpan.FromSeconds(3)">
+        <Carousel Autoplay="TimeSpan.FromSeconds(0)">
             <CarouselSlick>
                 <h5>T-SQL</h5>
                 <Row>
@@ -12,6 +13,22 @@
                                     Avatar="images/sql-server.png"
                                     Content="High Proficiency in Data Manipulation Language (DML) Data Definition Language (DDL) Data Control Language (DCL) and Transaction Control Language (TCL). All with the latest version."
                                     Datetime="">
+                            <Row>
+                                <Col Span="12">
+                                    <pre class="code">
+                                        <code class="sql">
+                                            @SnippetTsql2
+                                        </code>
+                                    </pre>
+                                </Col>
+                                <Col Span="12">
+                                    <pre class="code">
+                                        <code class="sql">
+                                            @SnippetTsql1
+                                        </code>
+                                    </pre>
+                                </Col>
+                            </Row>
                         </Comment>
                     </Col>
                     <Col Span="6">
@@ -23,6 +40,7 @@
                     </Col>
                 </Row>
             </CarouselSlick>
+            
             <CarouselSlick>
                 <h5>Performance Optimizer</h5>
                 <Row>
@@ -31,6 +49,14 @@
                                     Avatar="images/performance.png"
                                     Content="High Proficiency in Analysis and resolution of performance problems in database servers. Query tunning and index strategies."
                                     Datetime="">
+                            <Row>
+                                <Col Span="12">
+                                    <Image Src="images/performance-monitor.png"/>
+                                </Col>
+                                <Col Span="12">
+                                    <Image Src="images/performance-monitor-2.png"/>
+                                </Col>
+                            </Row>
                         </Comment>
                     </Col>
                     <Col Span="6">
@@ -42,14 +68,31 @@
                     </Col>
                 </Row>
             </CarouselSlick>
-            <CarouselSlick>
+        </Carousel>
+    </Col>
+</Row>
+
+<Divider></Divider>
+
+<Row>
+    <Col Span="24">
+        <Carousel Autoplay="TimeSpan.FromSeconds(0)">
+             <CarouselSlick>
                 <h5>Server Maintenance</h5>
                 <Row>
                     <Col Span="18">
                         <Comment Author="Maintennance plans and Jobs"
-                                    Avatar="images/tools.png"
+                                    Avatar="images/tools.jpg"
                                     Content="High Proficiency in Sql Server maintenance plans and problem resolution."
                                     Datetime="">
+                            <Row>
+                                <Col Span="12">
+                                    <Image Src="images/maintenance.png"/>
+                                </Col>
+                                <Col Span="12">
+                                    <Image Src="images/maintenance-2.png"/>
+                                </Col>
+                            </Row>
                         </Comment>
                     </Col>
                     <Col Span="6">
@@ -61,13 +104,115 @@
                     </Col>
                 </Row>
             </CarouselSlick>
+
             <CarouselSlick>
                 <h5>Indexing</h5>
+                <Row>
+                    <Col Span="18">
+                        <Comment Author="Indexing strategies"
+                                    Avatar="images/sql-server.png"
+                                    Content="High Proficiency in Sql Server indexing strategies. Clustered/NonClustered indexes, ColumnStore and XML Indexes."
+                                    Datetime="">
+                            <Row>
+                                <Col Span="12">
+                                    <pre class="code">
+                                        <code class="sql">
+                                            @SnippetIndexing
+                                        </code>
+                                    </pre>
+                                </Col>
+                                <Col Span="12">
+                                    <Image Src="images/indexes.png"/>
+                                </Col>
+                            </Row>
+                        </Comment>
+                    </Col>
+                    <Col Span="6">
+                        <Statistic Title="Level" Value="95" Precision="2" ValueStyle="color: #3f8600;" Suffix="%">
+                            <PrefixTemplate>
+                                <span><Icon Type="arrow-up" /></span>
+                            </PrefixTemplate>
+                        </Statistic>
+                    </Col>
+                </Row>
             </CarouselSlick>
         </Carousel>
     </Col>
 </Row>
 
 @code{
+    const string SnippetTsql1 = @"CREATE PROCEDURE [Security].[NotificationUserPendingExiste]
+  @IdUser INT
+AS
+BEGIN
+  SET NOCOUNT ON
+  
+  DECLARE @StateNotificationUserPending INT = 1
+      , @StateNotificationCompleted INT = 2
+      , @StateNotificationError INT = 4
+  
+  IF EXISTS
+  	(
+  		SELECT 1 
+  		FROM [Security].[NotificationUser] NU
+  			INNER JOIN [Security].[Notification] N ON NU.IdNotification = N.IdNotification
+  		WHERE NU.IdUser = @IdUser AND NU.State = @StateNotificationUserPending
+  			AND N.State IN (@StateNotificationCompleted, @StateNotificationError)
+  	)
+  BEGIN
+  	SELECT CAST(1 AS BIT)
+  END
+  ELSE
+  BEGIN
+  	SELECT CAST(0 AS BIT)
+  END
+END";
 
+    const string SnippetTsql2 = @"CREATE PROCEDURE [Security].[BackupTenantRestore]
+  @IdTenant INT,
+  @TenantDatabase VARCHAR(200),
+  @FileName VARCHAR(200),
+  @PathTemp VARCHAR(400),
+  @Debug BIT = 0
+AS
+BEGIN
+  SET NOCOUNT ON
+  SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+  SET XACT_ABORT ON
+  
+  IF @@TRANCOUNT > 0
+  BEGIN
+  	DECLARE @ProcName SYSNAME = OBJECT_NAME(@@PROCID)
+  	DECLARE @CurrentTrancount INT = @@TRANCOUNT
+  
+  	RAISERROR (N'Transaction count before calling .... %s was %d...'
+  		, @ProcName, @CurrentTrancount);
+  END
+  
+  CREATE TABLE #Table(Id INT NOT NULL IDENTITY(1,1))
+  CREATE TABLE #ForeignKeyColumn([TableName] VARCHAR(200) NOT NULL)
+  CREATE TABLE #PrimaryKeyColumn([TableName] VARCHAR(200) NOT NULL)
+...
+...";
+
+    const string SnippetIndexing = @"CREATE NONCLUSTERED INDEX [IX_Bug_IdAssigned] ON [Bugs].[Bug]
+(
+	[IdAssigned] ASC
+) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_Bug_IdCategory] ON [Bugs].[Bug]
+(
+	[IdCategory] ASC
+) ON [PRIMARY]
+
+CREATE NONCLUSTERED COLUMNSTORE INDEX [IX_Bug_Code] ON [Bugs].[Bug]
+(
+	[Code]
+) ON [PRIMARY]";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await JSRuntime.InvokeVoidAsync("highlightSnippets");
+    }
 }

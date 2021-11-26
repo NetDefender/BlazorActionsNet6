@@ -8,10 +8,18 @@
     <base href="/BlazorActionsNet6/" />
     <!--<base href="/" />-->
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="BlazorActionsNet6.styles.css" rel="stylesheet" />
+
     <link href="_content/AntDesign/css/ant-design-blazor.css" rel="stylesheet" />
     <script src="_content/AntDesign/js/ant-design-blazor.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/css.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/equilibrium-gray-light.min.css" integrity="sha512-Q4qDNghg0dAyxXL22oil62saOTVMexFqYj9Y15QkAD6Jljf74TW1M0EfYtAIrKUXb53PIo3G/h3pLHqBcgPMfA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="BlazorActionsNet6.styles.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -22,6 +30,13 @@
         <a href="" class="reload">Recargar</a>
         <a class="dismiss">🗙</a>
     </div>
+    <script>
+        window.highlightSnippets = function ()
+        {
+            hljs.highlightAll();
+        }
+    </script>
+
     <script src="_framework/blazor.webassembly.js"></script>
 
     <!-- Start Single Page Apps for GitHub Pages -->
@@ -55,7 +70,7 @@
         }(window.location))
     </script>
     <!-- End Single Page Apps for GitHub Pages -->
-    
+
 </body>
 
 </html>
