@@ -14,16 +14,16 @@
                                     Content="Extended use of git as source code provider. Use of github actions."
                                     Datetime="">
                             <Card>
-                                <CardGrid Style="width:50%;" Hoverable="true">
-                                    <pre class="code">
-                                        <code class="yaml">
-                                            @SnippetGitActions
-                                        </code>
-                                    </pre>
-                                </CardGrid>
-                                <CardGrid Style="width:50%;text-align:center" Hoverable="false">
-                                    <Image Src="images/git-01.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
-                                    <Image Src="images/git-02.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@github" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
                                 </CardGrid>
                             </Card>
                         </Comment>
@@ -39,23 +39,23 @@
             </CarouselSlick>
 
             <CarouselSlick>
-                <h5>r</h5>
                 <Row>
                     <Col Span="18">
                         <Comment Author="Jenkins"
-                                    Avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                    Avatar="images/jenkins-updated.png"
                                     Content="CI/CD with Jenkins Automation Server."
                                     Datetime="">
                             <Card>
-                                <CardGrid Style="width:50%;text-align:center" Hoverable="true">
-                                    <Image Src="images/jenkins.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="400px"/>
-                                </CardGrid>
-                                <CardGrid Style="width:50%;" Hoverable="true">
-                                     <pre class="code">
-                                        <code class="javascript">
-                                            @SnippetJenkins
-                                        </code>
-                                    </pre>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@jenkins" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
                                 </CardGrid>
                             </Card>
                         </Comment>
@@ -71,16 +71,23 @@
             </CarouselSlick>
 
             <CarouselSlick>
-                <h5>r</h5>
                 <Row>
                     <Col Span="18">
                         <Comment Author="Other Source Control Providers"
-                                    Avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                                    Content="Medium usage of SVN trunk system. Visual Source Safe."
+                                    Avatar="images/svn.svg"
+                                    Content="Medium usage of SVN trunk system. Visual Source Safe"
                                     Datetime="">
                             <Card>
-                                <CardGrid Style="width:100%;text-align:center" Hoverable="true">
-                                    <Image Src="images/svn.svg" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@svn" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
                                 </CardGrid>
                             </Card>
                         </Comment>
@@ -115,53 +122,32 @@
 </style>
 
 @code{
-
     private Carousel _carousel;
 
+    private readonly RenderFragment githubAvatar = @<Avatar Src="images/git.png"></Avatar>;
+    private readonly RenderFragment jenkinsAvatar = @<Avatar Src="images/jenkins-updated.png"></Avatar>;
+    private readonly RenderFragment svnAvatar = @<Avatar Src="images/svn.svg"></Avatar>;
 
-    const string SnippetGitActions = @"name: CI
-on:
-  push:
-    branches: [ DES_GH_Pages ]
-  workflow_dispatch:
-jobs:
-  build:
-    runs-on: ubuntu-latest
+    private readonly ProficiencyItem[] github = new ProficiencyItem[]{
+        new ProficiencyItem("Github Actions", string.Empty),
+        new ProficiencyItem("Merge/Pull Request", string.Empty),
+        new ProficiencyItem("Branching", string.Empty),
+        new ProficiencyItem("Protected Branches", string.Empty),
+        new ProficiencyItem("Pipelines", string.Empty),
+        new ProficiencyItem("Releases", string.Empty),
+        new ProficiencyItem("Github Pages", string.Empty),
+    };
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Configurando .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.100
-    - name: Publicando el artefacto
-      run: dotnet publish --configuration Release --output build
-    - name: Publicar en Github Pages
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BASE_BRANCH: DES_GH_Pages # The branch the action should deploy from.
-        BRANCH: master # The branch the action should deploy to.
-        FOLDER: build/wwwroot # The folder the action should deploy.
-        SINGLE_COMMIT: true";
+    private readonly ProficiencyItem[] jenkins = new ProficiencyItem[]{
+        new ProficiencyItem("Scripting", string.Empty),
+        new ProficiencyItem(".NET Plugins", string.Empty),
+        new ProficiencyItem("Gitlab webhooks", string.Empty),
+    };
 
-    const string SnippetJenkins = @"
-#!groovy
-
-pipeline {
-  agent any
-
-  parameters {
-    string(defaultValue: """", description: 'Branch', name: 'PARAMETER01')
-    string(defaultValue: """", description: 'Deploy ...', name: 'PARAMETER02')
-  }
-
-  environment {
-    // Variables extraidas de gitlab -->https://github.com/jenkinsci/gitlab-plugin
-    PROYECTO = 'hermesii'
-    PROTOCOL_GITLAB_TARGET = 'https://' // Protocol to conect with GIT
-  }";
-
+    private readonly ProficiencyItem[] svn = new ProficiencyItem[]{
+        new ProficiencyItem("Trunk Usage", string.Empty),
+    };
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);

@@ -12,25 +12,21 @@
                     <Col Span="18">
                         <Comment Author="Scripting, Stored Procedures and CLR integration"
                                     Avatar="images/sql-server.png"
-                                    Content="High Proficiency in Data Manipulation Language (DML) Data Definition Language (DDL) Data Control Language (DCL) and Transaction Control Language (TCL)
-. All with the latest version knowledge. Stored Procedures, functions, views, triggers, CLR data types (FileStream, HierarchyId, etc), custom types and JSON data types."
+                                    Content="High Proficiency in scripting with the latest SQL Server version"
                                     Datetime="">
-                            <Row>
-                                <Col Span="12">
-                                    <pre class="code">
-                                        <code class="sql">
-                                            @SnippetTsql2
-                                        </code>
-                                    </pre>
-                                </Col>
-                                <Col Span="12">
-                                    <pre class="code">
-                                        <code class="sql">
-                                            @SnippetTsql1
-                                        </code>
-                                    </pre>
-                                </Col>
-                            </Row>
+                            <Card>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@scripting" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
+                                </CardGrid>
+                            </Card>
                         </Comment>
                     </Col>
                     <Col Span="6">
@@ -49,21 +45,19 @@
                     <Col Span="18">
                         <Comment Author="Research and Troubleshooting"
                                     Avatar="images/performance.png"
-                                    Content="High Proficiency in Analysis and resolution of performance problems in database servers. Query tunning and index strategies. 
-AWS CloudWatch, PerfMon, Sql Server Profiler and Execution Plan evaluation."
+                                    Content="High Proficiency in Analysis and resolution of performance problems in database servers"
                                     Datetime="">
                             <Card>
-                                <CardGrid Style="width:50%;text-align:center" Hoverable="true">
-                                    <Image Src="images/performance-monitor.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
-                                </CardGrid>
-                                <CardGrid Style="width:50%;text-align:center" Hoverable="false">
-                                    <Image Src="images/performance-monitor-3.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
-                                </CardGrid>
-                                <CardGrid Style="width:50%;text-align:center" Hoverable="true">
-                                    <Image Src="images/performance-monitor-2.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
-                                </CardGrid>
-                                <CardGrid Style="width:50%;text-align:center" Hoverable="true">
-                                    <Image Src="images/performance-monitor-4.png" Style="margin: 2px 2px 2px 2px;text-align: center" Width="600px"/>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@research" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
                                 </CardGrid>
                             </Card>
                         </Comment>
@@ -84,16 +78,21 @@ AWS CloudWatch, PerfMon, Sql Server Profiler and Execution Plan evaluation."
                     <Col Span="18">
                         <Comment Author="Maintennance plans and Jobs"
                                     Avatar="images/tools.jpg"
-                                    Content="High Proficiency in Sql Server maintenance plans and problem resolution."
+                                    Content="High Proficiency in Sql Server maintenance plans and problem resolution"
                                     Datetime="">
-                            <Row>
-                                <Col Span="12">
-                                    <Image Src="images/maintenance.png"/>
-                                </Col>
-                                <Col Span="12">
-                                    <Image Src="images/maintenance-2.png"/>
-                                </Col>
-                            </Row>
+                            <Card>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@maintenance" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
+                                </CardGrid>
+                            </Card>
                         </Comment>
                     </Col>
                     <Col Span="6">
@@ -112,20 +111,21 @@ AWS CloudWatch, PerfMon, Sql Server Profiler and Execution Plan evaluation."
                     <Col Span="18">
                         <Comment Author="Indexing strategies"
                                     Avatar="images/sql-server.png"
-                                    Content="High Proficiency in Sql Server indexing strategies. Clustered/NonClustered indexes, ColumnStore and XML Indexes."
+                                    Content="High Proficiency in Sql Server indexing strategies"
                                     Datetime="">
-                            <Row>
-                                <Col Span="12">
-                                    <pre class="code">
-                                        <code class="sql">
-                                            @SnippetIndexing
-                                        </code>
-                                    </pre>
-                                </Col>
-                                <Col Span="12">
-                                    <Image Src="images/indexes.png"/>
-                                </Col>
-                            </Row>
+                            <Card>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@indexes" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
+                                </CardGrid>
+                            </Card>
                         </Comment>
                     </Col>
                     <Col Span="6">
@@ -158,78 +158,44 @@ AWS CloudWatch, PerfMon, Sql Server Profiler and Execution Plan evaluation."
 </style>
 
 @code{
-
     private Carousel _carousel;
 
+    private readonly RenderFragment tSqlAvatar = @<Avatar Src="images/tsql.gif"></Avatar>;
+    private readonly RenderFragment researchAvatar = @<Avatar Src="images/research.gif"></Avatar>;
+    private readonly RenderFragment maintenanceAvatar = @<Avatar Src="images/maintenance.gif"></Avatar>;
+    private readonly RenderFragment indexesAvatar = @<Avatar Src="images/indexes.gif"></Avatar>;
 
-    const string SnippetTsql1 = @"CREATE PROCEDURE [Security].[NotificationUserPendingExiste]
-  @IdUser INT
-AS
-BEGIN
-  SET NOCOUNT ON
-  
-  DECLARE @StateNotificationUserPending INT = 1
-      , @StateNotificationCompleted INT = 2
-      , @StateNotificationError INT = 4
-  
-  IF EXISTS
-  	(
-  		SELECT 1 
-  		FROM [Security].[NotificationUser] NU
-  			INNER JOIN [Security].[Notification] N ON NU.IdNotification = N.IdNotification
-  		WHERE NU.IdUser = @IdUser AND NU.State = @StateNotificationUserPending
-  			AND N.State IN (@StateNotificationCompleted, @StateNotificationError)
-  	)
-  BEGIN
-  	SELECT CAST(1 AS BIT)
-  END
-  ELSE
-  BEGIN
-  	SELECT CAST(0 AS BIT)
-  END
-END";
+    private readonly ProficiencyItem[] scripting = new ProficiencyItem[]{
+        new ProficiencyItem("Data Manipulation Language (DML)", string.Empty),
+        new ProficiencyItem("Data Definition Language (DDL)", string.Empty),
+        new ProficiencyItem("Data Control Language (DCL)", string.Empty),
+        new ProficiencyItem("Transaction Control Language (TCL)", string.Empty),
+        new ProficiencyItem("Stored Procedures", string.Empty),
+        new ProficiencyItem("Functions", string.Empty),
+        new ProficiencyItem("Views", string.Empty),
+        new ProficiencyItem("Aggregates", string.Empty),
+        new ProficiencyItem("CLR data types (FileStream, HierarchyId) and JSON data type", string.Empty),
+    };
 
-    const string SnippetTsql2 = @"CREATE PROCEDURE [Security].[BackupTenantRestore]
-  @IdTenant INT,
-  @TenantDatabase VARCHAR(200),
-  @FileName VARCHAR(200),
-  @PathTemp VARCHAR(400),
-  @Debug BIT = 0
-AS
-BEGIN
-  SET NOCOUNT ON
-  SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
-  SET XACT_ABORT ON
-  
-  IF @@TRANCOUNT > 0
-  BEGIN
-  	DECLARE @ProcName SYSNAME = OBJECT_NAME(@@PROCID)
-  	DECLARE @CurrentTrancount INT = @@TRANCOUNT
-  
-  	RAISERROR (N'Transaction count before calling .... %s was %d...'
-  		, @ProcName, @CurrentTrancount);
-  END
-  
-  CREATE TABLE #Table(Id INT NOT NULL IDENTITY(1,1))
-  CREATE TABLE #ForeignKeyColumn([TableName] VARCHAR(200) NOT NULL)
-  CREATE TABLE #PrimaryKeyColumn([TableName] VARCHAR(200) NOT NULL)
-...
-...";
+    private readonly ProficiencyItem[] research = new ProficiencyItem[]{
+        new ProficiencyItem("Execution Plan evaluation", string.Empty),
+        new ProficiencyItem("PerfMon", string.Empty),
+        new ProficiencyItem("Sql Server Profiler", string.Empty),
+        new ProficiencyItem("Sql Server Logs", string.Empty),
+        new ProficiencyItem("AWS CloudWatch", string.Empty),
+    };
 
-    const string SnippetIndexing = @"CREATE NONCLUSTERED INDEX [IX_Bug_IdAssigned] ON [Bugs].[Bug]
-(
-	[IdAssigned] ASC
-) ON [PRIMARY]
+    private readonly ProficiencyItem[] maintenance = new ProficiencyItem[]{
+        new ProficiencyItem("Sql Server Agent", string.Empty),
+        new ProficiencyItem("Sql Server Jobs", string.Empty),
+        new ProficiencyItem("Extended Events", string.Empty),
+    };
 
-CREATE NONCLUSTERED INDEX [IX_Bug_IdCategory] ON [Bugs].[Bug]
-(
-	[IdCategory] ASC
-) ON [PRIMARY]
-
-CREATE NONCLUSTERED COLUMNSTORE INDEX [IX_Bug_Code] ON [Bugs].[Bug]
-(
-	[Code]
-) ON [PRIMARY]";
+    private readonly ProficiencyItem[] indexes = new ProficiencyItem[]{
+        new ProficiencyItem("Clustered/NonClustered Indexes", string.Empty),
+        new ProficiencyItem("ColumnStore Indexes", string.Empty),
+        new ProficiencyItem("XML Indexes", string.Empty),
+    };
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

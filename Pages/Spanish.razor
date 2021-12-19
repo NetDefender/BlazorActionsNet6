@@ -1,7 +1,79 @@
 ﻿@page "/Spanish"
 
-<h3>Spanish</h3>
+@inject IJSRuntime JSRuntime
+@inject MessageService _message
 
-@code {
+<Divider Orientation="left"><h3>Language Usage</h3></Divider>
+<Row>
+    <Col Span="24">
+        <Carousel Autoplay="TimeSpan.FromSeconds(30)" @ref="_carousel">
+            <CarouselSlick>
+                <Row>
+                    <Col Span="18">
+                        <Comment Author="Native Level"
+                                    Avatar="images/spain-flag.png"
+                                    Content="Technical spanish"
+                                    Datetime="">
+                            <Card>
+                                <CardGrid Style="width:100%;" Hoverable="true">
+                                    <AntList DataSource="@spanish" TItem="ProficiencyItem">
+                                        <ListItem>
+                                            <ListItemMeta Description=@context.Description>
+                                                <TitleTemplate>
+                                                    @context.Title
+                                                </TitleTemplate>
+                                            </ListItemMeta>
+                                        </ListItem>
+                                    </AntList>
+                                </CardGrid>
+                            </Card>
+                        </Comment>
+                    </Col>
+                    <Col Span="6">
+                        <Statistic Title="Level" Value="95" Precision="2" ValueStyle="color: #3f8600;" Suffix="%">
+                            <PrefixTemplate>
+                                <span><Icon Type="arrow-up" /></span>
+                            </PrefixTemplate>
+                        </Statistic>
+                    </Col>
+                </Row>
+            </CarouselSlick>
+        </Carousel>
+    </Col>
+</Row>
+<Row>
+    <Col Span="24">
+        <div class="button-container">
+            <Button Type="primary" OnClick="@( _=>{_carousel.Previous();_message.Success("Previous information slide", 10);})" Size="Large" Shape="@ButtonShape.Round">Previous</Button>
+            <Button Type="primary" OnClick="@( _=>{_carousel.Next();_message.Success("Next information slide", 10);})" Size="Large" Shape="@ButtonShape.Round">Next</Button>
+        </div>
+    </Col>
+</Row>
 
+<style>
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        padding-top:4px;
+    }
+</style>
+
+@code{
+
+    private Carousel _carousel;
+
+    private readonly RenderFragment spanishAvatar = @<Avatar Src="images/spain-flag.png"></Avatar>;
+
+    private readonly ProficiencyItem[] spanish = new ProficiencyItem[]{
+        new ProficiencyItem("Talk Habilities", string.Empty),
+        new ProficiencyItem("Read/Write Native", string.Empty),
+        new ProficiencyItem("Read/Write Technical Analysis", string.Empty),
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await JSRuntime.InvokeVoidAsync("highlightSnippets");
+    }
 }
+
