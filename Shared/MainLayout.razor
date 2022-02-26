@@ -5,31 +5,6 @@
         <div class="logo" />
         <Menu Theme="MenuTheme.Dark" DefaultSelectedKeys=@(new[]{"1"}) Mode="MenuMode.Inline">
             @{
-                RenderFragment fragWorkHistory =
-                    @<span>
-                        <Icon Type="history" Theme="outline"/>
-                        <span>Work History</span>
-                    </span>;
-            }
-            <SubMenu Key="keyJobHistory" TitleTemplate=fragWorkHistory>
-                <MenuItem Key="keyJobHistoryOesia" RouterLink="/JobHistoryOesia">
-                    <Icon Type="laptop" Theme="outline"/>
-                    <span>OESIA</span>
-                </MenuItem>
-                <MenuItem Key="keyJobHistoryAuloce" RouterLink="/JobHistoryAuloce">
-                    <Icon Type="desktop" Theme="outline"/>
-                    <span>Auloce</span>
-                </MenuItem>
-                <MenuItem Key="keyJobHistoryIasoft" RouterLink="/JobHistoryIasoft">
-                    <Icon Type="desktop" Theme="outline"/>
-                    <span>iaSoft</span>
-                </MenuItem>
-                <MenuItem Key="keyJobHistoryJohnson" RouterLink="/JobHistoryJohnson">
-                    <Icon Type="car" Theme="outline"/>
-                    <span>Johnson</span>
-                </MenuItem>
-            </SubMenu>
-            @{
                 RenderFragment fragProficiencies =
                     @<span>
                         <Icon Type="sketch" Theme="outline"/>
@@ -53,34 +28,8 @@
                     <Icon Type="tool" Theme="outline"/>
                     <span>Frameworks</span>
                 </MenuItem>
-                <MenuItem Key="keyProficienciesScrum" RouterLink="Scrum">
-                    <Icon Type="retweet" Theme="outline"/>
-                    <span>Scrum</span>
-                </MenuItem>
-                <MenuItem Key="keyProficienciesServers" RouterLink="Servers">
-                    <Icon Type="windows" Theme="outline"/>
-                    <span>Servers</span>
-                </MenuItem>
             </SubMenu>
 
-            @{
-                RenderFragment fragStudies =
-                    @<span>
-                        <Icon Type="book" Theme="outline"/>
-                        <span>Studies</span>
-                    </span>;
-            }
-            <SubMenu Key="keyStudies" TitleTemplate=fragStudies>
-                <MenuItem Key="keyStudyCertifications" RouterLink="Certifications">
-                    <Icon Type="container" Theme="outline"/>
-                    <span>Certifications</span></MenuItem>
-                <MenuItem Key="keyStudyUniversity" RouterLink="University">
-                    <Icon Type="bank" Theme="outline"/>
-                    <span>University</span></MenuItem>
-                <MenuItem Key="keyStudySecondary" RouterLink="Secondary">
-                    <Icon Type="file-done" Theme="outline"/>
-                    <span>Secondary</span></MenuItem>
-            </SubMenu>
             @{
                 RenderFragment fragLanguages =
                     @<span>
